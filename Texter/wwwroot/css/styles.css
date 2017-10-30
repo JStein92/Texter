@@ -1,0 +1,21 @@
+﻿.navbar{
+    padding-top: 30px;  
+    padding-bottom: 30px;  
+}
+.navbar-item {
+    margin-left: 15px;
+}
+.log-out-btn{
+
+    background:none;
+    color:white;
+    padding-bottom:5px;
+ 
+}
+.log-out-btn:hover{
+    cursor:pointer;
+    text-decoration:underline;
+}
+#text-form {
+    display:none;
+}

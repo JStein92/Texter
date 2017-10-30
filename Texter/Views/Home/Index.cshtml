@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Texter.Models.Contact>
+
+@{
+    ViewData["Title"] = "Product - Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+	<script>
+		$(document).ready(function() {
+            $(".show-txt-form").click(function() {
+		        $("#text-form").toggle();
+		    });
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+            $(".send-message").submit(function(event) {
+                event.preventDefault();
+		        $.ajax ({
+		            url: '@Url.Action("SendMessage")',
+		            type: 'POST',
+		            dataType: 'html',
+		            success: function (result) {
+                        alert("Message sent!");
+                    }
+		        });
+		    });
+		});
+	</script>
+</head>
+<body>
+    @if(User.Identity.IsAuthenticated)
+    {
+    <h2>@User.Identity.Name's Adress Book</h2>
+
+    @Html.ActionLink("Create a new contact", "Create", "Contact")
+
+      @foreach (var contact in Model)
+        {
+            if (contact.User.UserName == User.Identity.Name)
+            {
+               <div class="card-deck">
+                  <div class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">@contact.ContactName</h4>
+                      <p>@contact.ContactNumber</p>
+
+    			        <button class="show-txt-form">Write New Message</button>
+    			        <div id="text-form">
+                            <form action="SendMessage" class="send-message">
+                                <input type="hidden" name="to" value="@contact.ContactNumber"/>
+						        <input type="hidden" name="from" value="2062078035"/>
+                                <label for="body">Message: </label>
+                                <textarea class="form-control" type="text" name="body"></textarea>
+                                <button type="submit">Submit</button>
+                            </form>
+				        </div>
+                    </div>
+                  </div>
+                </div>
+            } 
+       }
+    } else {
+
+    <h1>Please Register or Log In to create an address book</h1>
+
+      <p> @Html.ActionLink("Log In", "Login", "Account")</p>
+      <p> @Html.ActionLink("Register", "Register", "Account")</p>
+    }
+
+</body>
+

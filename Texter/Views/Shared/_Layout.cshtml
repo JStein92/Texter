@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css" />
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <title>Texter</title>
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <h3 class="navbar-brand">@Html.ActionLink("Texter", "Index", "Home", null, new { style = "color:white" })</h3>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+					@if(User.Identity.IsAuthenticated){
+					   <li class="navbar-item"> @Html.ActionLink("Address Book", "Index", "Home", null, new { style = "color:white" })</li>
+                       <div class="navbar-toggler-right">
+    					    <span class="navbar-item"> @Html.ActionLink(@User.Identity.Name, "Index", "Account", null, new { style = "color:white" })</span>
+                            @using (Html.BeginForm("LogOff", "Account"))
+                            { 
+                                <input type="submit" class="btn btn-default log-out-btn" value="Log out" />
+                            }
+					    </div>
+					} else {
+                     <p class="navbar-item"> @Html.ActionLink("Log In", "Login", "Account", null, new { style = "color:white" })</p>
+                     <p class="navbar-item"> @Html.ActionLink("Register", "Register", "Account", null, new { style = "color:white" })</p>
+					}
+               
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron"><h1>Texter</h1></div>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿@model Texter.Models.Contact
+
+@{
+    ViewData["Title"] = "Product - Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add new contact!</h1>
+
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.ContactName)
+    @Html.EditorFor(model => model.ContactName)
+
+    @Html.LabelFor(model => model.ContactNumber)
+    @Html.EditorFor(model => model.ContactNumber)
+
+    <input type="submit" value="Save"/>
+}
