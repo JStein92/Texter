@@ -16,6 +16,6 @@
     cursor:pointer;
     text-decoration:underline;
 }
-#text-form {
+.text-form {
     display:none;
 }

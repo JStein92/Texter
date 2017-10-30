@@ -42,6 +42,7 @@ namespace Texter.Controllers
             _db.Contacts.Add(contact);
             _db.SaveChanges();
             return RedirectToAction("Index", "Home");
+
         }
     }
 }

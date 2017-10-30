@@ -6,26 +6,11 @@
 }
 
 <head>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script>
 		$(document).ready(function() {
             $(".show-txt-form").click(function() {
-		        $("#text-form").toggle();
-		    });
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
-            $(".send-message").submit(function(event) {
-                event.preventDefault();
-		        $.ajax ({
-		            url: '@Url.Action("SendMessage")',
-		            type: 'POST',
-		            dataType: 'html',
-		            success: function (result) {
-                        alert("Message sent!");
-                    }
-		        });
+		        $(this).siblings(".text-form").toggle();
 		    });
 		});
 	</script>
@@ -48,15 +33,9 @@
                       <p>@contact.ContactNumber</p>
 
     			        <button class="show-txt-form">Write New Message</button>
-    			        <div id="text-form">
-                            <form action="SendMessage" class="send-message">
-                                <input type="hidden" name="to" value="@contact.ContactNumber"/>
-						        <input type="hidden" name="from" value="2062078035"/>
-                                <label for="body">Message: </label>
-                                <textarea class="form-control" type="text" name="body"></textarea>
-                                <button type="submit">Submit</button>
-                            </form>
-				        </div>
+    			        <div class="text-form">
+                            @Html.Partial("SendMessage", new Texter.Models.Message(contact.ContactNumber))
+			            </div>
                     </div>
                   </div>
                 </div>
