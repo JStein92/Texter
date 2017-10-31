@@ -42,7 +42,13 @@ namespace Texter.Controllers
             _db.Contacts.Add(contact);
             _db.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
 
+        public IActionResult Details(int contactId)
+        {
+            var thisContact = _db.Contacts.FirstOrDefault(contact => contact.ContactId == contactId);
+            ViewBag.messages = Message.GetMessages();
+            return View(thisContact);
         }
     }
 }

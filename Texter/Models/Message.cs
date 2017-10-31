@@ -67,6 +67,10 @@ namespace Texter.Models
         {
             this.To = to;
         }
+        public Message()
+        {
+        }
+
 
 
     }

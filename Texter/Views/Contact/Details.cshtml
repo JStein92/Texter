@@ -1,0 +1,29 @@
+﻿@model Texter.Models.Contact
+
+@{
+    ViewData["Title"] = "Product - Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.ContactName's Message History</h1>
+
+
+
+
+<ol>
+   @foreach(var message in ViewBag.messages)
+        {
+	    @if(message.To == "+1" + @Model.ContactNumber){
+    	  <li>
+                <ul>
+                    <li>To: @message.To</li>
+                    <li>From: @message.From</li>
+                    <li>Body: @message.Body</li>
+                    <li>Status: @message.Status</li>
+                </ul>
+            </li>
+	        <br>
+	         }
+       
+        }
+</ol>

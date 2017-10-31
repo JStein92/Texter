@@ -41,53 +41,64 @@
 <body>
     @if(User.Identity.IsAuthenticated)
     {
-    <h2>@User.Identity.Name's Adress Book</h2>
+    <h2>@User.Identity.Name's Address Book</h2>
 
-    @Html.ActionLink("Create a new contact", "Create", "Contact")
-    <p id="group-text"></p>
-	<div id="group-msg-form">
-		@using (Html.BeginForm("SendGroupMessage", "Home", FormMethod.Post))
-		{
-		    <input id="to-list" type="hidden" name="to" value=""/>
-            <input type="hidden" name="from" value="2062078035"/>
-            <label>Message</label>
-            <textarea name="body"></textarea>
-            <input type="submit" class="btn btn-info" value="Send Group Message"/>
-		}
+    @Html.ActionLink("Create a new contact", "Create", "Contact", null, new {@class = "btn btn-info add-contact-btn"})
+    <div class="card" id="group-msg-form">
+		<div class="card-block">
+			<label>Recipient(s): </label>
+        	<p id="group-text">/p>
+        	<div>
+        		@using (Html.BeginForm("SendGroupMessage", "Home", FormMethod.Post))
+        		{
+        		    <input id="to-list" type="hidden" name="to" value=""/>
+                    <input type="hidden" name="from" value="2062078035"/>
+                    <textarea name="body" class="form-control"></textarea>
+                    <input type="submit" class="btn btn-info float-right send-group-button" value="Send Group Message" />
+				    <br />
+        		}
+    	    </div>
+		</div>
 	</div>
-	
-      foreach (var contact in Model)
+ 
+      @foreach (var contact in Model)
         {
             if (contact.User.UserName == User.Identity.Name)
             {
-               <div class="card-deck">
-                  <div class="card">
-                    <div class="card-block">
-				     <span class="float-right show-txt-form">
-                         <button class="btn btn-success">Write New Message</button>
+             
+                  <div class="card person-card">
+                    <div class="card-block ">
+				 
+                      <h4 class="card-title">@Html.ActionLink(@contact.ContactName, "Details", "Contact", new {contactId = @contact.ContactId }) <span class="small">@contact.ContactNumber</span></h4>
+
+				    <span class="show-txt-form">
+                         <button class="btn btn-success float-right">Send a Message</button>
                       </span>
-                      <h4 class="card-title">@contact.ContactName</h4>
-                      <p>@contact.ContactNumber
-    					<span class="float-right">
-    						<input class="number" type="checkbox" name="group-text-checkbox" value="@contact.ContactNumber"/>Add to Group
-    					</span>
+                      <p>
+					
+    					
+    						<input class="number" type="checkbox" name="group-text-checkbox" value="@contact.ContactNumber"/> Add to Group Text
+    				
 				        </p>
                         <div class="text-form">
                             @Html.Partial("SendMessage", new Texter.Models.Message(contact.ContactNumber))
 			            </div>
                     </div>
                   </div>
-                </div>
+                
            } 
        }
-
-    } else {
+    } 
+		
+	@if(!User.Identity.IsAuthenticated) 
+	{
 
     <h1>Please Register or Log In to create an address book</h1>
 
       <p> @Html.ActionLink("Log In", "Login", "Account")</p>
       <p> @Html.ActionLink("Register", "Register", "Account")</p>
     }
-
+		
+       
 </body>
 

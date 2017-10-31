@@ -26,4 +26,23 @@
 
 #group-msg-form {
     display: none;
+    padding-bottom: 10px;
+    margin: 15px;
+    background-color: #f9f9f9;
+}
+
+.send-group-button {
+    margin-top: 10px;
+
+}
+.number:hover{
+    cursor:pointer;
+}
+.person-card{
+   
+   
+
+}
+.add-contact-btn{
+    margin-bottom: 10px;
 }
