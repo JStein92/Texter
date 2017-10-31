@@ -9,9 +9,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script>
 		$(document).ready(function() {
+
+		var groupTextString = "";
+		
             $(".show-txt-form").click(function() {
 		        $(this).siblings(".text-form").toggle();
 		    });
+
+		    $(".number").click(function(){
+		        if (this.checked){
+		            groupTextString += this.value +", ";
+		            $("#group-text").text(groupTextString);
+		             $("#to-list").val(groupTextString);
+		              
+                      $("#group-msg-form").show()
+		          
+		        } else {
+		            var re = new RegExp(this.value + ", ");
+		            groupTextString = groupTextString.replace(re, "");
+		            $("#group-text").text(groupTextString);
+                    $("#to-list").val(groupTextString);
+		              if (groupTextString.length == 0)
+                        {
+                            $("#group-msg-form").hide()
+                        }
+		        }
+            });
 		});
 	</script>
 </head>
@@ -21,26 +44,43 @@
     <h2>@User.Identity.Name's Adress Book</h2>
 
     @Html.ActionLink("Create a new contact", "Create", "Contact")
-
-      @foreach (var contact in Model)
+    <p id="group-text"></p>
+	<div id="group-msg-form">
+		@using (Html.BeginForm("SendGroupMessage", "Home", FormMethod.Post))
+		{
+		    <input id="to-list" type="hidden" name="to" value=""/>
+            <input type="hidden" name="from" value="2062078035"/>
+            <label>Message</label>
+            <textarea name="body"></textarea>
+            <input type="submit" class="btn btn-info" value="Send Group Message"/>
+		}
+	</div>
+	
+      foreach (var contact in Model)
         {
             if (contact.User.UserName == User.Identity.Name)
             {
                <div class="card-deck">
                   <div class="card">
                     <div class="card-block">
+				     <span class="float-right show-txt-form">
+                         <button class="btn btn-success">Write New Message</button>
+                      </span>
                       <h4 class="card-title">@contact.ContactName</h4>
-                      <p>@contact.ContactNumber</p>
-
-    			        <button class="show-txt-form">Write New Message</button>
-    			        <div class="text-form">
+                      <p>@contact.ContactNumber
+    					<span class="float-right">
+    						<input class="number" type="checkbox" name="group-text-checkbox" value="@contact.ContactNumber"/>Add to Group
+    					</span>
+				        </p>
+                        <div class="text-form">
                             @Html.Partial("SendMessage", new Texter.Models.Message(contact.ContactNumber))
 			            </div>
                     </div>
                   </div>
                 </div>
-            } 
+           } 
        }
+
     } else {
 
     <h1>Please Register or Log In to create an address book</h1>

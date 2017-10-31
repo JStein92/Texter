@@ -1,6 +1,5 @@
 ﻿@model Texter.Models.Message
 
-<h2>Send a new message</h2>
 <hr />
 @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
 {
@@ -8,10 +7,11 @@
 
     <input type="hidden" name="from" value="2062078035"/>
 
-    @Html.LabelFor(model => model.Body)
-    @Html.TextBoxFor(model => model.Body)
+    @Html.TextAreaFor(model => model.Body, new {@class="form-control"})
 
-    <input type="submit" value="Send!" />
+    <div class="float-right">
+        <input type="submit" value="Send!" class="btn btn-info submit" />
+	</div>
 }
 
 @Html.ActionLink("Back home", "Index")

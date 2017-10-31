@@ -19,3 +19,11 @@
 .text-form {
     display:none;
 }
+
+.float-right {
+    float: right;
+}
+
+#group-msg-form {
+    display: none;
+}

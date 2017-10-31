@@ -49,5 +49,19 @@ namespace Texter.Controllers
             newMessage.Send();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult SendGroupMessage(string to, string from, string body)
+        {
+            var groupArray = to.Split(',');
+
+            for (int i = 0; i < groupArray.Length; i++)
+            {
+                var newMessage = new Message(groupArray[i].Trim(), from, body);
+                newMessage.Send();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
